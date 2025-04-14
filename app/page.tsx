@@ -18,8 +18,8 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 
-// You can replace these imports with your own fonts or use the ones from your existing project
 import { Inter, Poppins } from "next/font/google";
+import Image from "next/image";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,7 +39,7 @@ const ProjectCard = ({ title, description, tags, image, link }) => {
       className="group relative bg-card rounded-lg overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-300"
     >
       <div className="relative aspect-video w-full overflow-hidden">
-        <img
+        <Image
           src={image}
           alt={title}
           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
@@ -49,7 +49,7 @@ const ProjectCard = ({ title, description, tags, image, link }) => {
             <Button
               variant="outline"
               size="sm"
-              className="text-white border-white/30 bg-black/30 backdrop-blur-sm hover:bg-black/50"
+              className="text-white border-white/30 bg-black/30 backdrop-blur-sm hover:bg-black/50 cursor-pointer hover:text-white"
             >
               View Project <ExternalLink className="ml-2 h-4 w-4" />
             </Button>
@@ -119,7 +119,7 @@ export default function Portfolio() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY;
 
       const aboutPosition = aboutRef.current?.offsetTop || 0;
       const experiencePosition = experienceRef.current?.offsetTop || 0;
@@ -262,7 +262,7 @@ export default function Portfolio() {
           className="space-y-6 max-w-3xl"
         >
           <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/20 mx-auto">
-            <img
+            <Image
               src="/ashwin.jpg"
               alt="Profile"
               className="w-full h-full object-cover"
@@ -284,19 +284,25 @@ export default function Portfolio() {
           <div className="flex justify-center space-x-4">
             <Button
               variant="default"
-              className="gap-2"
+              className="gap-2 cursor-pointer"
               onClick={() => {
-                setCurrentNavItem("projects");
-                scrollToSection(projectsRef); // ← scrolls to the actual section
+                setCurrentNavItem("experience");
+                scrollToSection(experienceRef); // ← scrolls to the actual section
               }}
             >
               My Work
               <ArrowDown className="h-4 w-4" />
             </Button>
-
-            <Button variant="outline" className="gap-2">
-              Contact Me <Mail className="h-4 w-4" />
-            </Button>
+            <a
+              href="mailto:ashwinsm10@gmail.com"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button variant="outline" className="gap-2 cursor-pointer">
+                Contact Me
+                <Mail className="h-4 w-4" />
+              </Button>
+            </a>
           </div>
           <div className="flex justify-center space-x-3 pt-6">
             <Button
@@ -449,7 +455,7 @@ export default function Portfolio() {
                 <Card>
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold mb-2">Location</h3>
-                    <p className="text-primary font-medium">Santa Cruz</p>
+                    <p className="text-primary font-medium">Tracy</p>
                     <p className="text-sm text-muted-foreground">
                       California, USA
                     </p>
@@ -563,19 +569,11 @@ export default function Portfolio() {
           </div>
 
           <div className="mt-12 text-center">
-            <Button
-              variant="outline"
-              className="gap-2"
-              as="a"
-              href="https://github.com/ashwinsm10"
-              target="_blank"
-            >
-              View All Projects{" "}
-              <ExternalLink
-                className="h-4 w-4"
-                href="https://github.com/ashwinsm10"
-              />
-            </Button>
+            <a href="https://github.com/ashwinsm10" target="_blank">
+              <Button variant="outline" className="gap-2 cursor-pointer">
+                View All Projects <ExternalLink className="h-4 w-4" />
+              </Button>
+            </a>
           </div>
         </div>
       </section>
@@ -679,7 +677,7 @@ export default function Portfolio() {
               <Card>
                 <CardContent className="p-6">
                   <h3 className="text-xl font-semibold mb-4">
-                    Send me a message
+                    Send me a message (Not working, email for now)
                   </h3>
                   <form className="space-y-4">
                     <div>
