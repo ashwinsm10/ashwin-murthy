@@ -269,7 +269,7 @@ export default function Portfolio() {
             />
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-            Hi, I'm{" "}
+            Hi, I&apos;m{" "}
             <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
               Ashwin Murthy
             </span>
@@ -374,18 +374,19 @@ export default function Portfolio() {
                 About Me
               </h2>
               <p className="text-muted-foreground mb-4">
-                I'm a passionate Computer Science student at UC Santa Cruz with
-                a strong focus on creating intuitive, efficient, and scalable
-                web applications. With experience in both frontend and backend
-                development, I've worked with various technologies and
-                frameworks to deliver high-quality solutions.
+                I&apos;m a passionate Computer Science student at UC Santa Cruz
+                with a strong focus on creating intuitive, efficient, and
+                scalable web applications. With experience in both frontend and
+                backend development, I&apos;ve worked with various technologies
+                and frameworks to deliver high-quality solutions.
               </p>
               <p className="text-muted-foreground mb-6">
                 My approach combines technical expertise with creative
                 problem-solving to build applications that not only meet
                 functional requirements but also provide exceptional user
-                experiences. I'm particularly interested in AI integrations,
-                database optimization, and creating responsive UI designs.
+                experiences. I&apos;m particularly interested in AI
+                integrations, database optimization, and creating responsive UI
+                designs.
               </p>
               <div className="flex flex-wrap gap-2">
                 <span className="text-sm py-1 px-3 rounded-full bg-primary/10 text-primary">
@@ -438,7 +439,9 @@ export default function Portfolio() {
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold mb-2">GPA</h3>
                     <p className="text-primary font-medium">3.9</p>
-                    <p className="text-sm text-muted-foreground">Dean's List</p>
+                    <p className="text-sm text-muted-foreground">
+                      Dean&apos;s List
+                    </p>
                   </CardContent>
                 </Card>
                 <Card>
@@ -481,8 +484,8 @@ export default function Portfolio() {
               Work Experience
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              A timeline of my professional journey and the companies I've had
-              the pleasure to work with.
+              A timeline of my professional journey and the companies I&apos;ve
+              had the pleasure to intern with.
             </p>
           </motion.div>
 
