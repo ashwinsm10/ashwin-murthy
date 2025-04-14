@@ -31,8 +31,23 @@ const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
 });
+type SectionRef = React.RefObject<HTMLElement> | any;
 
-const ProjectCard = ({ title, description, tags, image, link }) => {
+type ProjectCardProps = {
+  title: string;
+  description: string;
+  tags: string[];
+  image: string;
+  link: string;
+};
+type ExperienceItemProps = {
+  title: string;
+  company: string;
+  period: string;
+  description: string;
+  skills: string[];
+};
+const ProjectCard = ({ title, description, tags, image, link }: ProjectCardProps) => {
   return (
     <motion.div
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
@@ -74,7 +89,7 @@ const ProjectCard = ({ title, description, tags, image, link }) => {
   );
 };
 
-const ExperienceItem = ({ title, company, period, description, skills }) => {
+const ExperienceItem = ({ title, company, period, description, skills }: ExperienceItemProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -108,10 +123,11 @@ const ExperienceItem = ({ title, company, period, description, skills }) => {
 export default function Portfolio() {
   const [currentNavItem, setCurrentNavItem] = useState("home");
   const { scrollY } = useScroll();
-  const aboutRef = useRef(null);
-  const projectsRef = useRef(null);
-  const experienceRef = useRef(null);
-  const contactRef = useRef(null);
+  const aboutRef = useRef<HTMLElement>(null);
+  const projectsRef = useRef<HTMLElement>(null);
+  const experienceRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
+  
 
   const bgY = useTransform(scrollY, [0, 300], [0, -100]);
   const bgYSmooth = useSpring(bgY, { damping: 20, stiffness: 100 });
@@ -121,10 +137,11 @@ export default function Portfolio() {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
 
-      const aboutPosition = aboutRef.current?.offsetTop || 0;
-      const experiencePosition = experienceRef.current?.offsetTop || 0;
-      const projectsPosition = projectsRef.current?.offsetTop || 0;
-      const contactPosition = contactRef.current?.offsetTop || 0;
+      const aboutPosition =aboutRef.current?.offsetTop ?? 0;
+      const experiencePosition = experienceRef.current?.offsetTop ?? 0;
+      const projectsPosition = projectsRef.current?.offsetTop ?? 0;
+      const contactPosition = contactRef.current?.offsetTop ?? 0;
+  
 
       if (scrollPosition < aboutPosition) {
         setCurrentNavItem("home");
@@ -143,7 +160,7 @@ export default function Portfolio() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (ref) => {
+  const scrollToSection = (ref: SectionRef) => {
     if (ref && ref.current) {
       window.scrollTo({
         top: ref.current.offsetTop - 80,
@@ -743,41 +760,41 @@ export default function Portfolio() {
               © {new Date().getFullYear()} All rights reserved.
             </p>
           </div>
-
           <div className="flex gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              as="a"
-              href="https://github.com/ashwinsm10"
-              target="_blank"
-            >
-              <Github className="h-5 w-5" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              as="a"
-              href="https://linkedin.com/in/ashwinsm10"
-              target="_blank"
-            >
-              <Linkedin className="h-5 w-5" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              as="a"
-              href="mailto:ashwinsm10@gmail.com"
-            >
-              <Mail className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <PenTool className="h-5 w-5" />
-            </Button>
-          </div>
+  <Button
+    variant="ghost"
+    size="icon"
+    className="rounded-full"
+    asChild
+  >
+    <a href="https://github.com/ashwinsm10" target="_blank" rel="noreferrer">
+      <Github className="h-5 w-5" />
+    </a>
+  </Button>
+  <Button
+    variant="ghost"
+    size="icon"
+    className="rounded-full"
+    asChild
+  >
+    <a href="https://linkedin.com/in/ashwinsm10" target="_blank" rel="noreferrer">
+      <Linkedin className="h-5 w-5" />
+    </a>
+  </Button>
+  <Button
+    variant="ghost"
+    size="icon"
+    className="rounded-full"
+    asChild
+  >
+    <a href="mailto:ashwinsm10@gmail.com" rel="noreferrer">
+      <Mail className="h-5 w-5" />
+    </a>
+  </Button>
+  <Button variant="ghost" size="icon" className="rounded-full">
+    <PenTool className="h-5 w-5" />
+  </Button>
+</div>
         </div>
       </footer>
     </div>
