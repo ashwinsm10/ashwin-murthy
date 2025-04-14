@@ -47,7 +47,13 @@ type ExperienceItemProps = {
   description: string;
   skills: string[];
 };
-const ProjectCard = ({ title, description, tags, image, link }: ProjectCardProps) => {
+const ProjectCard = ({
+  title,
+  description,
+  tags,
+  image,
+  link,
+}: ProjectCardProps) => {
   return (
     <motion.div
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
@@ -56,6 +62,8 @@ const ProjectCard = ({ title, description, tags, image, link }: ProjectCardProps
       <div className="relative aspect-video w-full overflow-hidden">
         <Image
           src={image}
+          width={96}
+          height={96}
           alt={title}
           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
         />
@@ -89,7 +97,13 @@ const ProjectCard = ({ title, description, tags, image, link }: ProjectCardProps
   );
 };
 
-const ExperienceItem = ({ title, company, period, description, skills }: ExperienceItemProps) => {
+const ExperienceItem = ({
+  title,
+  company,
+  period,
+  description,
+  skills,
+}: ExperienceItemProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -127,7 +141,6 @@ export default function Portfolio() {
   const projectsRef = useRef<HTMLElement>(null);
   const experienceRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
-  
 
   const bgY = useTransform(scrollY, [0, 300], [0, -100]);
   const bgYSmooth = useSpring(bgY, { damping: 20, stiffness: 100 });
@@ -137,11 +150,10 @@ export default function Portfolio() {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
 
-      const aboutPosition =aboutRef.current?.offsetTop ?? 0;
+      const aboutPosition = aboutRef.current?.offsetTop ?? 0;
       const experiencePosition = experienceRef.current?.offsetTop ?? 0;
       const projectsPosition = projectsRef.current?.offsetTop ?? 0;
       const contactPosition = contactRef.current?.offsetTop ?? 0;
-  
 
       if (scrollPosition < aboutPosition) {
         setCurrentNavItem("home");
@@ -282,6 +294,8 @@ export default function Portfolio() {
             <Image
               src="/ashwin.jpg"
               alt="Profile"
+              width={96}
+              height={96}
               className="w-full h-full object-cover"
             />
           </div>
@@ -310,6 +324,7 @@ export default function Portfolio() {
               My Work
               <ArrowDown className="h-4 w-4" />
             </Button>
+
             <a
               href="mailto:ashwinsm10@gmail.com"
               target="_blank"
@@ -318,6 +333,16 @@ export default function Portfolio() {
               <Button variant="outline" className="gap-2 cursor-pointer">
                 Contact Me
                 <Mail className="h-4 w-4" />
+              </Button>
+            </a>
+            <a
+              href="/Ashwin_s_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="secondary" className="gap-2 cursor-pointer">
+                View Resume
+                <ExternalLink className="h-4 w-4" />
               </Button>
             </a>
           </div>
@@ -761,40 +786,48 @@ export default function Portfolio() {
             </p>
           </div>
           <div className="flex gap-4">
-  <Button
-    variant="ghost"
-    size="icon"
-    className="rounded-full"
-    asChild
-  >
-    <a href="https://github.com/ashwinsm10" target="_blank" rel="noreferrer">
-      <Github className="h-5 w-5" />
-    </a>
-  </Button>
-  <Button
-    variant="ghost"
-    size="icon"
-    className="rounded-full"
-    asChild
-  >
-    <a href="https://linkedin.com/in/ashwinsm10" target="_blank" rel="noreferrer">
-      <Linkedin className="h-5 w-5" />
-    </a>
-  </Button>
-  <Button
-    variant="ghost"
-    size="icon"
-    className="rounded-full"
-    asChild
-  >
-    <a href="mailto:ashwinsm10@gmail.com" rel="noreferrer">
-      <Mail className="h-5 w-5" />
-    </a>
-  </Button>
-  <Button variant="ghost" size="icon" className="rounded-full">
-    <PenTool className="h-5 w-5" />
-  </Button>
-</div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              asChild
+            >
+              <a
+                href="https://github.com/ashwinsm10"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Github className="h-5 w-5" />
+              </a>
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              asChild
+            >
+              <a
+                href="https://linkedin.com/in/ashwinsm10"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              asChild
+            >
+              <a href="mailto:ashwinsm10@gmail.com" rel="noreferrer">
+                <Mail className="h-5 w-5" />
+              </a>
+            </Button>
+            <Button variant="ghost" size="icon" className="rounded-full">
+              <PenTool className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
       </footer>
     </div>
