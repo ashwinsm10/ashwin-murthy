@@ -31,7 +31,7 @@ const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
 });
-type SectionRef = React.RefObject<HTMLElement> | any;
+type SectionRef = React.RefObject<HTMLElement | null>;
 
 type ProjectCardProps = {
   title: string;
