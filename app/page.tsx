@@ -148,7 +148,7 @@ export default function Portfolio() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
+      const scrollPosition = window.scrollY + 81; // Add 81 to match the scroll offset
 
       const aboutPosition = aboutRef.current?.offsetTop ?? 0;
       const experiencePosition = experienceRef.current?.offsetTop ?? 0;
