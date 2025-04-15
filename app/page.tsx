@@ -20,6 +20,7 @@ import Link from "next/link";
 
 import { Inter, Poppins } from "next/font/google";
 import Image from "next/image";
+import { VideoWithSlider } from "./video_player";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,7 +38,7 @@ type ProjectCardProps = {
   title: string;
   description: string;
   tags: string[];
-  image: string;
+  media: string; // rename from image to media
   link: string;
 };
 type ExperienceItemProps = {
@@ -51,7 +52,7 @@ const ProjectCard = ({
   title,
   description,
   tags,
-  image,
+  media,
   link,
 }: ProjectCardProps) => {
   return (
@@ -60,27 +61,31 @@ const ProjectCard = ({
       className="group relative bg-card rounded-lg overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-300"
     >
       <div className="relative aspect-video w-full overflow-hidden">
-        <Image
-          src={image}
-          width={96}
-          height={96}
-          alt={title}
-          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4">
+        {media.endsWith(".mp4") ? (
+          <VideoWithSlider src={media} />
+        ) : (
+          <Image
+            src={media}
+            width={96}
+            height={96}
+            alt={title}
+            className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+          />
+        )}
+      </div>
+      <div className="p-4">
+        <div className="flex items-center justify-between gap-4">
+          <h3 className="text-lg font-semibold">{title}</h3>
           <Link href={link} target="_blank" rel="noopener noreferrer">
             <Button
-              variant="outline"
               size="sm"
-              className="text-white border-white/30 bg-black/30 backdrop-blur-sm hover:bg-black/50 cursor-pointer hover:text-white"
+              className="cursor-pointer bg-gradient-to-r from-primary to-primary/80 text-white border-none"
             >
               View Project <ExternalLink className="ml-2 h-4 w-4" />
             </Button>
           </Link>
         </div>
-      </div>
-      <div className="p-4">
-        <h3 className="text-lg font-semibold">{title}</h3>
+
         <p className="text-muted-foreground text-sm mt-1">{description}</p>
         <div className="flex flex-wrap gap-2 mt-3">
           {tags.map((tag, index) => (
@@ -309,8 +314,8 @@ export default function Portfolio() {
             Full Stack Developer & CS Student
           </p>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            I build modern web applications with a focus on performance, clean
-            code, and exceptional user experience.
+            I build modern web and mobile applications with a focus on
+            performance, clean code, and exceptional user experience.
           </p>
           <div className="flex justify-center space-x-4">
             <Button
@@ -593,22 +598,39 @@ export default function Portfolio() {
             <ProjectCard
               title="Slugtistics"
               description="An intuitive course selection platform serving 6,000+ students, featuring a data pipeline and real-time professor reviews."
-              tags={["Python", "Flask", "React", "SQLite", "AWS", "GraphQL"]}
-              image="/api/placeholder/400/300"
+              tags={[
+                "Python",
+                "Flask",
+                "React",
+                "SQLite",
+                "AWS",
+                "GraphQL",
+                "Gemini API",
+                "Pinecone",
+                "Google Maps API",
+              ]}
+              media="/videos/slugtistics.mp4"
               link="https://slugtistics.com/all"
             />
             <ProjectCard
               title="Farmer Feast"
               description="A full-stack app that helps users find local ingredients from farmers markets based on any dish, with shopping trip optimization."
-              tags={["Next.js", "React", "Supabase", "Google Maps API"]}
-              image="/api/placeholder/400/300"
+              tags={[
+                "Next.js",
+                "React",
+                "Gemini API",
+                "Supabase",
+                "Google Maps API",
+                "Puppeteer",
+              ]}
+              media="/videos/farmer-feast.mp4"
               link="https://www.farmerfeast.tech/"
             />
             <ProjectCard
               title="Cruz-Thru"
               description="AI-powered study tool using Flask and React Native to transcribe lectures and generate flashcards."
               tags={["Python", "Flask", "React Native", "Google Gemini"]}
-              image="/api/placeholder/400/300"
+              media="/cruz-thru.png"
               link="https://github.com/ashwinsm10/cruz-thru"
             />
           </div>
