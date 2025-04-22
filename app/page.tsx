@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Github,
   Linkedin,
@@ -141,7 +141,6 @@ const ExperienceItem = ({
 
 export default function Portfolio() {
   const [currentNavItem, setCurrentNavItem] = useState("home");
-  const { scrollY } = useScroll();
   const aboutRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
   const experienceRef = useRef<HTMLElement>(null);
