@@ -215,40 +215,40 @@ export default function Portfolio() {
               onClick={() =>
                 scrollToSection({ current: document.getElementById("home") })
               }
-              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors ${
+              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
                 currentNavItem === "home"
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "bg-primary text-primary-foreground shadow-md"
+                  : "text-foreground hover:text-primary hover:bg-muted/80"
               }`}
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection(aboutRef)}
-              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors ${
+              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
                 currentNavItem === "about"
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "bg-primary text-primary-foreground shadow-md"
+                  : "text-foreground hover:text-primary hover:bg-muted/80"
               }`}
             >
               About
             </button>
             <button
               onClick={() => scrollToSection(experienceRef)}
-              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors ${
+              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
                 currentNavItem === "experience"
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "bg-primary text-primary-foreground shadow-md"
+                  : "text-foreground hover:text-primary hover:bg-muted/80"
               }`}
             >
               Experience
             </button>
             <button
               onClick={() => scrollToSection(projectsRef)}
-              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors ${
+              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
                 currentNavItem === "projects"
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "bg-primary text-primary-foreground shadow-md"
+                  : "text-foreground hover:text-primary hover:bg-muted/80"
               }`}
             >
               Projects
@@ -256,10 +256,10 @@ export default function Portfolio() {
 
             <button
               onClick={() => scrollToSection(contactRef)}
-              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors ${
+              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
                 currentNavItem === "contact"
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "bg-primary text-primary-foreground shadow-md"
+                  : "text-foreground hover:text-primary hover:bg-muted/80"
               }`}
             >
               Contact
