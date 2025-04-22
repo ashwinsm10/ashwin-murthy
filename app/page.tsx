@@ -156,8 +156,6 @@ export default function Portfolio() {
     window.addEventListener("scroll", handleNavScroll);
     return () => window.removeEventListener("scroll", handleNavScroll);
   }, []);
-  const bgY = useTransform(scrollY, [0, 300], [0, -100]);
-  const bgYSmooth = useSpring(bgY, { damping: 20, stiffness: 100 });
 
   useEffect(() => {
     const handleScroll = () => {
