@@ -136,7 +136,7 @@ const ContactForm = () => {
               <Button
                 className="w-full"
                 type="submit"
-                disabled={!message.trim() || (email && !isValidEmail(email))}
+                disabled={!message.trim() || (!!email && !isValidEmail(email))}
               >
                 Send Message
               </Button>
