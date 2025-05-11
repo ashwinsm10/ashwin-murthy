@@ -43,7 +43,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-.dark {
+:root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
@@ -78,7 +78,7 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
 }
 
-:root {  --radius: 0.625rem;
+.dark  {  --radius: 0.625rem;
 
   
   --background: oklch(0.129 0.042 264.695);

@@ -21,6 +21,7 @@ import { Inter, Poppins } from "next/font/google";
 import Image from "next/image";
 import { VideoWithSlider } from "./video_player";
 import { ParallaxBackground } from "./background";
+import ContactForm from "./contactform";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -79,7 +80,7 @@ const ProjectCard = ({
           <Link href={link} target="_blank" rel="noopener noreferrer">
             <Button
               size="sm"
-              className="cursor-pointer bg-gradient-to-r from-primary to-primary/80 text-black border-none"
+              className="cursor-pointer bg-gradient-to-r from-primary to-primary/80 text-white border-none"
             >
               View Project <ExternalLink className="ml-2 h-4 w-4" />
             </Button>
@@ -146,6 +147,7 @@ export default function Portfolio() {
   const experienceRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [bgEnabled, setBgEnabled] = useState(true);
 
   useEffect(() => {
     const handleNavScroll = () => {
@@ -194,15 +196,14 @@ export default function Portfolio() {
   return (
     <div className={`${inter.variable} ${poppins.variable} font-sans`}>
       {/* Background */}
-      <ParallaxBackground />
+      {bgEnabled && <ParallaxBackground />}
 
       {/* Navigation */}
       <nav
-        className={`fixed top-0 w-full z-50  border-border transition-all duration-300 ${
+        className={`fixed top-0 w-full z-20  border-border transition-all duration-300 ${
           hasScrolled ? "backdrop-blur-sm shadow-sm" : ""
         }`}
       >
-        {" "}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="font-bold text-xl tracking-tight font-heading">
             Ashwin Murthy
@@ -263,6 +264,14 @@ export default function Portfolio() {
             </button>
           </div>
           <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="block"
+              onClick={() => setBgEnabled((v) => !v)}
+            >
+              {bgEnabled ? "Hide" : "Show"}
+            </Button>
             {/* You can include your ThemeSwitcher component here */}
             <div className="md:hidden">
               {/* Mobile menu button */}
@@ -292,7 +301,7 @@ export default function Portfolio() {
       {/* Hero Section */}
       <section
         id="home"
-        className="relative z-10 min-h-screen w-full flex flex-col justify-center items-center text-center px-4"
+        className="relative min-h-screen w-full flex flex-col justify-center items-center text-center px-4"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -335,18 +344,19 @@ export default function Portfolio() {
               <ArrowDown className="h-4 w-4" />
             </Button>
 
-            <a
-              href="mailto:ashwinsm10@gmail.com"
-              target="_blank"
-              rel="noreferrer"
+            <Button
+              variant="outline"
+              className="gap-2 cursor-pointer"
+              onClick={() => {
+                setCurrentNavItem("contact");
+                scrollToSection(contactRef); // ← scrolls to the actual section
+              }}
             >
-              <Button variant="outline" className="gap-2 cursor-pointer">
-                Contact Me
-                <Mail className="h-4 w-4" />
-              </Button>
-            </a>
+              Contact Me
+              <Mail className="h-4 w-4" />
+            </Button>
             <a
-              href="/Ashwin_s_Resume.pdf"
+              href="/Ashwin_Murthy_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -411,7 +421,7 @@ export default function Portfolio() {
       </section>
 
       {/* About Section */}
-      <section ref={aboutRef} className="relative z-10 py-24 w-full px-4">
+      <section ref={aboutRef} className="relative py-24 w-full px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row gap-12">
             <motion.div
@@ -437,8 +447,8 @@ export default function Portfolio() {
                 problem-solving to build applications that not only meet
                 functional requirements but also provide exceptional user
                 experiences. I&apos;m particularly interested in AI
-                integrations, database optimization, and creating responsive UI
-                designs.
+                integrations, database optimization, creating responsive UI
+                designs, but mostly solving problems.
               </p>
               <div className="flex flex-wrap gap-2">
                 <span className="text-sm py-1 px-3 rounded-full bg-primary/10 text-primary">
@@ -489,7 +499,7 @@ export default function Portfolio() {
                       B.S. Computer Science
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      UC Santa Cruz, 2023-2026
+                      UC Santa Cruz, 2023-2027
                     </p>
                   </CardContent>
                 </Card>
@@ -528,7 +538,7 @@ export default function Portfolio() {
         </div>
       </section>
       {/* Experience Section */}
-      <section ref={experienceRef} className="relative z-10 py-24 w-full px-4">
+      <section ref={experienceRef} className="relative py-24 w-full px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -560,7 +570,7 @@ export default function Portfolio() {
                 "RESTful APIs",
                 "Authentication",
                 "Web3",
-                "Docker"
+                "Docker",
               ]}
             />
 
@@ -577,7 +587,7 @@ export default function Portfolio() {
                 "GraphQL",
                 "Jest",
                 "UI/UX Design",
-                "Docker"
+                "Docker",
               ]}
             />
           </div>
@@ -585,7 +595,7 @@ export default function Portfolio() {
       </section>
 
       {/* Projects Section */}
-      <section ref={projectsRef} className="relative z-10 py-24 w-full px-4">
+      <section ref={projectsRef} className="relative py-24 w-full px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -656,7 +666,7 @@ export default function Portfolio() {
       </section>
 
       {/* Contact Section */}
-      <section ref={contactRef} className="relative z-10 py-24 w-full px-4">
+      <section ref={contactRef} className="relative py-24 w-full px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row gap-12">
             <motion.div
@@ -740,67 +750,7 @@ export default function Portfolio() {
                 </div>
               </div>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="md:w-1/2"
-            >
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-4">
-                    Send me a message (Not working, email for now)
-                  </h3>
-                  <form className="space-y-4">
-                    <div>
-                      <label
-                        htmlFor="name"
-                        className="block text-sm font-medium mb-1"
-                      >
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        className="w-full px-3 py-2 border border-border rounded-md bg-background"
-                        placeholder="Your name"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium mb-1"
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        className="w-full px-3 py-2 border border-border rounded-md bg-background"
-                        placeholder="your@email.com"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="message"
-                        className="block text-sm font-medium mb-1"
-                      >
-                        Message
-                      </label>
-                      <textarea
-                        id="message"
-                        rows={5}
-                        className="w-full px-3 py-2 border border-border rounded-md bg-background resize-none"
-                        placeholder="How can I help you?"
-                      ></textarea>
-                    </div>
-                    <Button className="w-full">Send Message</Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </motion.div>
+            <ContactForm />
           </div>
         </div>
       </section>
