@@ -1,5 +1,5 @@
 // components/ui/notification.tsx
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, AlertCircle, X } from "lucide-react";
 
@@ -67,7 +67,7 @@ export function Notification({
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.2 }}
           className="fixed top-0 right-0 z-40 w-full max-w-sm"
-          >
+        >
           <div
             className={`rounded-lg shadow-lg border px-4 py-3 flex items-center justify-between ${currentStyle.bg} ${currentStyle.border}`}
           >
