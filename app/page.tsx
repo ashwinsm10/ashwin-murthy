@@ -630,7 +630,7 @@ export default function Portfolio() {
                 "Google Maps API",
               ]}
               media="/videos/slugtistics.mp4"
-              link="https://slugtistics.com/all"
+              link="https://slugtistics.com/class"
             />
             <ProjectCard
               title="Farmer Feast"
