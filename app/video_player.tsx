@@ -1,4 +1,5 @@
 "use client";
+
 import { useRef, useState, useEffect } from "react";
 import { Play, Pause, Volume2, VolumeX, Maximize } from "lucide-react";
 
@@ -9,6 +10,7 @@ export function VideoWithSlider({ src }: { src: string }) {
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
   const [showControls, setShowControls] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const controlsTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -30,6 +32,17 @@ export function VideoWithSlider({ src }: { src: string }) {
       if (controlsTimeout.current) {
         clearTimeout(controlsTimeout.current);
       }
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement === videoRef.current);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
     };
   }, []);
 
@@ -82,12 +95,12 @@ export function VideoWithSlider({ src }: { src: string }) {
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
   return (
-    <div 
-      className="relative w-full group" 
+    <div
+      className="relative w-full group"
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => {
         if (isPlaying) setShowControls(false);
@@ -100,14 +113,19 @@ export function VideoWithSlider({ src }: { src: string }) {
         loop
         muted={isMuted}
         onTimeUpdate={handleTimeUpdate}
-        className="w-full h-auto object-cover rounded-lg"
         onClick={togglePlay}
         playsInline
+        className={`w-full h-auto rounded-lg transition-all duration-300 ${
+          isFullscreen ? "object-contain" : "object-cover"
+        }`}
       />
-      
+
       {/* Video Controls Overlay */}
-      <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}>
-        
+      <div
+        className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 transition-opacity duration-300 ${
+          showControls ? "opacity-100" : "opacity-0"
+        }`}
+      >
         {/* Progress Bar */}
         <div className="flex items-center mb-2">
           <input
@@ -119,25 +137,33 @@ export function VideoWithSlider({ src }: { src: string }) {
             className="w-full h-1 cursor-pointer accent-primary bg-gray-300 rounded-lg appearance-none"
           />
         </div>
-        
+
         {/* Control Buttons */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <button 
+            <button
               onClick={togglePlay}
               className="p-1 rounded-full bg-primary/20 hover:bg-primary/40 text-white"
             >
-              {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+              {isPlaying ? (
+                <Pause className="h-4 w-4" />
+              ) : (
+                <Play className="h-4 w-4" />
+              )}
             </button>
-            
+
             <div className="flex items-center space-x-1">
-              <button 
+              <button
                 onClick={toggleMute}
                 className="p-1 rounded-full bg-primary/20 hover:bg-primary/40 text-white"
               >
-                {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                {isMuted ? (
+                  <VolumeX className="h-4 w-4" />
+                ) : (
+                  <Volume2 className="h-4 w-4" />
+                )}
               </button>
-              
+
               <input
                 type="range"
                 min="0"
@@ -148,15 +174,16 @@ export function VideoWithSlider({ src }: { src: string }) {
                 className="w-16 h-1 cursor-pointer accent-primary bg-gray-300 rounded-lg appearance-none"
               />
             </div>
-            
+
             {videoRef.current && (
               <span className="text-xs text-white">
-                {formatTime(videoRef.current.currentTime)} / {formatTime(videoRef.current.duration || 0)}
+                {formatTime(videoRef.current.currentTime)} /{" "}
+                {formatTime(videoRef.current.duration || 0)}
               </span>
             )}
           </div>
-          
-          <button 
+
+          <button
             className="p-1 rounded-full bg-primary/20 hover:bg-primary/40 text-white"
             onClick={() => videoRef.current?.requestFullscreen()}
           >

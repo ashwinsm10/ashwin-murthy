@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import {
@@ -12,6 +11,13 @@ import {
   PenTool,
   User,
   ArrowDown,
+  Rocket,
+  Star,
+  Sun,
+  Satellite,
+  Eclipse,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -39,7 +45,7 @@ type ProjectCardProps = {
   title: string;
   description: string;
   tags: string[];
-  media: string; // rename from image to media
+  media: string;
   link: string;
 };
 type ExperienceItemProps = {
@@ -48,6 +54,7 @@ type ExperienceItemProps = {
   period: string;
   description: string;
   skills: string[];
+  logo?: string; // Optional logo
 };
 const ProjectCard = ({
   title,
@@ -59,7 +66,7 @@ const ProjectCard = ({
   return (
     <motion.div
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="group relative bg-card rounded-lg overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-300"
+      className="group relative bg-card/70 backdrop-blur-sm rounded-lg overflow-hidden border border-primary/20 shadow-sm hover:shadow-md hover:shadow-primary/20 transition-all duration-300"
     >
       <div className="relative aspect-video w-full overflow-hidden">
         {media.endsWith(".mp4") ? (
@@ -82,7 +89,7 @@ const ProjectCard = ({
               size="sm"
               className="cursor-pointer bg-gradient-to-r from-primary to-primary/80 text-white border-none"
             >
-              View Project <ExternalLink className="ml-2 h-4 w-4" />
+              Launch Project <Rocket className="ml-2 h-4 w-4" />
             </Button>
           </Link>
         </div>
@@ -92,7 +99,7 @@ const ProjectCard = ({
           {tags.map((tag, index) => (
             <span
               key={index}
-              className="text-xs py-1 px-2 rounded-full bg-muted text-muted-foreground"
+              className="text-xs py-1 px-2 rounded-full bg-primary/10 text-primary/90"
             >
               {tag}
             </span>
@@ -102,13 +109,13 @@ const ProjectCard = ({
     </motion.div>
   );
 };
-
 const ExperienceItem = ({
   title,
   company,
   period,
   description,
   skills,
+  logo,
 }: ExperienceItemProps) => {
   return (
     <motion.div
@@ -116,20 +123,34 @@ const ExperienceItem = ({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="flex flex-col md:flex-row gap-4 md:gap-8"
+      className="flex flex-col md:flex-row gap-6 md:gap-10"
     >
-      <div className="md:w-1/3">
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="text-primary font-medium">{company}</p>
+      {/* LEFT SIDE: Company Info */}
+      <div className="md:w-1/3 space-y-1">
+        <div className="flex items-center gap-2">
+          {logo && (
+            <img
+              src={logo}
+              alt={`${company} logo`}
+              className="w-6 h-6 object-contain rounded-md"
+            />
+          )}
+          <span className="text-sm font-semibold text-primary">{company}</span>
+        </div>
+        <p className="text-base font-medium text-foreground">{title}</p>
         <p className="text-sm text-muted-foreground">{period}</p>
       </div>
-      <div className="md:w-2/3">
-        <p className="text-muted-foreground mb-2">{description}</p>
-        <div className="flex flex-wrap gap-2">
+
+      {/* RIGHT SIDE: Description & Skills */}
+      <div className="md:w-2/3 space-y-3">
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {description}
+        </p>
+        <div className="flex flex-wrap gap-2 pt-1">
           {skills.map((skill, index) => (
             <span
               key={index}
-              className="text-xs py-1 px-2 rounded-full bg-muted text-muted-foreground"
+              className="text-xs font-medium py-1 px-2 rounded-full bg-muted text-muted-foreground border border-border"
             >
               {skill}
             </span>
@@ -200,12 +221,13 @@ export default function Portfolio() {
 
       {/* Navigation */}
       <nav
-        className={`fixed top-0 w-full z-20  border-border transition-all duration-300 ${
-          hasScrolled ? "backdrop-blur-sm shadow-sm" : ""
+        className={`fixed top-0 w-full z-20 border-border transition-all duration-300 ${
+          hasScrolled ? "backdrop-blur-md bg-background/30 shadow-sm" : ""
         }`}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <div className="font-bold text-xl tracking-tight font-heading">
+          <div className="font-bold text-xl tracking-tight font-heading flex items-center">
+            <Satellite className="mr-2 h-5 w-5 text-primary" />
             Ashwin Murthy
           </div>
           <div className="hidden md:flex items-center space-x-6">
@@ -216,7 +238,7 @@ export default function Portfolio() {
               className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
                 currentNavItem === "home"
                   ? "bg-primary text-primary-foreground shadow-md"
-                  : "text-foreground hover:text-primary hover:bg-muted/80"
+                  : "text-foreground hover:text-primary hover:bg-primary/10"
               }`}
             >
               Home
@@ -226,7 +248,7 @@ export default function Portfolio() {
               className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
                 currentNavItem === "about"
                   ? "bg-primary text-primary-foreground shadow-md"
-                  : "text-foreground hover:text-primary hover:bg-muted/80"
+                  : "text-foreground hover:text-primary hover:bg-primary/10"
               }`}
             >
               About
@@ -236,7 +258,7 @@ export default function Portfolio() {
               className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
                 currentNavItem === "experience"
                   ? "bg-primary text-primary-foreground shadow-md"
-                  : "text-foreground hover:text-primary hover:bg-muted/80"
+                  : "text-foreground hover:text-primary hover:bg-primary/10"
               }`}
             >
               Experience
@@ -246,7 +268,7 @@ export default function Portfolio() {
               className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
                 currentNavItem === "projects"
                   ? "bg-primary text-primary-foreground shadow-md"
-                  : "text-foreground hover:text-primary hover:bg-muted/80"
+                  : "text-foreground hover:text-primary hover:bg-primary/10"
               }`}
             >
               Projects
@@ -257,7 +279,7 @@ export default function Portfolio() {
               className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
                 currentNavItem === "contact"
                   ? "bg-primary text-primary-foreground shadow-md"
-                  : "text-foreground hover:text-primary hover:bg-muted/80"
+                  : "text-foreground hover:text-primary hover:bg-primary/10"
               }`}
             >
               Contact
@@ -267,14 +289,17 @@ export default function Portfolio() {
             <Button
               variant="outline"
               size="sm"
-              className="block"
+              className="block border-primary/30 hover:border-primary text-primary"
               onClick={() => setBgEnabled((v) => !v)}
             >
-              {bgEnabled ? "Hide" : "Show"}
+              {bgEnabled ? (
+                <Eye className="h-4 w-4" />
+              ) : (
+                <EyeOff className="h-4 w-4" />
+              )}
             </Button>
-            {/* You can include your ThemeSwitcher component here */}
+            {/* Mobile menu button */}
             <div className="md:hidden">
-              {/* Mobile menu button */}
               <Button variant="ghost" size="sm">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -307,9 +332,9 @@ export default function Portfolio() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="space-y-6 max-w-3xl"
+          className="space-y-6 max-w-3xl p-6 rounded-lg"
         >
-          <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/20 mx-auto">
+          <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/40 mx-auto glow-effect">
             <Image
               src="/ashwin.jpg"
               alt="Profile"
@@ -325,19 +350,19 @@ export default function Portfolio() {
             </span>
           </h1>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            Full Stack Developer & CS Student
+            Full Stack Developer & CS Explorer
           </p>
           <p className="text-muted-foreground max-w-xl mx-auto">
             I build modern web and mobile applications with a focus on
-            performance, clean code, and exceptional user experience.
+            performance, clean code, and stellar user experience.
           </p>
           <div className="flex justify-center space-x-4">
             <Button
               variant="default"
-              className="gap-2 cursor-pointer"
+              className="gap-2 cursor-pointer bg-gradient-to-r from-primary to-primary/80"
               onClick={() => {
                 setCurrentNavItem("experience");
-                scrollToSection(experienceRef); // ← scrolls to the actual section
+                scrollToSection(experienceRef);
               }}
             >
               My Work
@@ -346,10 +371,10 @@ export default function Portfolio() {
 
             <Button
               variant="outline"
-              className="gap-2 cursor-pointer"
+              className="gap-2 cursor-pointer border-primary/30 hover:border-primary text-primary"
               onClick={() => {
                 setCurrentNavItem("contact");
-                scrollToSection(contactRef); // ← scrolls to the actual section
+                scrollToSection(contactRef);
               }}
             >
               Contact Me
@@ -360,7 +385,10 @@ export default function Portfolio() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button variant="secondary" className="gap-2 cursor-pointer">
+              <Button
+                variant="secondary"
+                className="gap-2 cursor-pointer bg-background/30 hover:bg-background/50 backdrop-blur-sm"
+              >
                 View Resume
                 <ExternalLink className="h-4 w-4" />
               </Button>
@@ -370,7 +398,7 @@ export default function Portfolio() {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full"
+              className="rounded-full hover:bg-primary/10 hover:text-primary"
               asChild
             >
               <a
@@ -384,7 +412,7 @@ export default function Portfolio() {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full"
+              className="rounded-full hover:bg-primary/10 hover:text-primary"
               asChild
             >
               <a
@@ -398,7 +426,7 @@ export default function Portfolio() {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full"
+              className="rounded-full hover:bg-primary/10 hover:text-primary"
               asChild
             >
               <a
@@ -429,26 +457,25 @@ export default function Portfolio() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="md:w-1/2"
+              className="md:w-1/2 backdrop-blur-sm p-6 rounded-lg bg-card/20 border border-primary/10"
             >
               <h2 className="text-3xl font-bold mb-6 inline-flex items-center gap-2">
                 <User className="h-6 w-6 text-primary" />
-                About Me
+                About My Journey
               </h2>
               <p className="text-muted-foreground mb-4">
                 I&apos;m a passionate Computer Science student at UC Santa Cruz
                 with a strong focus on creating intuitive, efficient, and
-                scalable web applications. With experience in both frontend and
-                backend development, I&apos;ve worked with various technologies
-                and frameworks to deliver high-quality solutions.
+                scalable web applications. Like a well-planned space mission, I
+                approach development with precision and thoughtful exploration.
               </p>
               <p className="text-muted-foreground mb-6">
                 My approach combines technical expertise with creative
-                problem-solving to build applications that not only meet
-                functional requirements but also provide exceptional user
-                experiences. I&apos;m particularly interested in AI
-                integrations, database optimization, creating responsive UI
-                designs, but mostly solving problems.
+                problem-solving to build applications that navigate the digital
+                universe with elegance and efficiency. I&apos;m particularly
+                interested in AI integrations, database optimization, and
+                creating cosmic user interfaces that elevate the user experience
+                to new heights.
               </p>
               <div className="flex flex-wrap gap-2">
                 <span className="text-sm py-1 px-3 rounded-full bg-primary/10 text-primary">
@@ -492,9 +519,11 @@ export default function Portfolio() {
               className="md:w-1/2"
             >
               <div className="grid grid-cols-2 gap-4">
-                <Card>
+                <Card className="bg-card/30 backdrop-blur-sm border-primary/10">
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">Education</h3>
+                    <h3 className="text-xl font-semibold mb-2 flex items-center">
+                      <Star className="h-5 w-5 mr-2 text-primary" /> Education
+                    </h3>
                     <p className="text-primary font-medium">
                       B.S. Computer Science
                     </p>
@@ -503,18 +532,23 @@ export default function Portfolio() {
                     </p>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="bg-card/30 backdrop-blur-sm border-primary/10">
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">GPA</h3>
+                    <h3 className="text-xl font-semibold mb-2 flex items-center">
+                      <Sun className="h-5 w-5 mr-2 text-primary" /> GPA
+                    </h3>
                     <p className="text-primary font-medium">3.9</p>
                     <p className="text-sm text-muted-foreground">
                       Dean&apos;s List
                     </p>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="bg-card/30 backdrop-blur-sm border-primary/10">
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">Experience</h3>
+                    <h3 className="text-xl font-semibold mb-2 flex items-center">
+                      <Rocket className="h-5 w-5 mr-2 text-primary" />{" "}
+                      Experience
+                    </h3>
                     <p className="text-primary font-medium">
                       Full Stack Development
                     </p>
@@ -523,9 +557,11 @@ export default function Portfolio() {
                     </p>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="bg-card/30 backdrop-blur-sm border-primary/10">
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">Location</h3>
+                    <h3 className="text-xl font-semibold mb-2 flex items-center">
+                      <Eclipse className="h-5 w-5 mr-2 text-primary" /> Location
+                    </h3>
                     <p className="text-primary font-medium">Tracy</p>
                     <p className="text-sm text-muted-foreground">
                       California, USA
@@ -549,20 +585,37 @@ export default function Portfolio() {
           >
             <h2 className="text-3xl font-bold mb-4 inline-flex items-center gap-2 justify-center">
               <Briefcase className="h-6 w-6 text-primary" />
-              Work Experience
+              Orbit of Experience
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              A timeline of my professional journey and the companies I&apos;ve
-              had the pleasure to intern with.
+              A journey through my professional trajectory and the companies
+              I&apos;ve had the opportunity to contribute to.
             </p>
           </motion.div>
 
-          <div className="space-y-12">
+          <div className="space-y-12 backdrop-blur-sm p-6 rounded-lg bg-card/20 border border-primary/10">
+            <ExperienceItem
+              title="Software Engineer Intern – Network Engineering"
+              company="Crusoe"
+              period="Jun 2025 - Aug 2025"
+              description="Contributing to automation tooling for AI-focused production networks, building Python-based systems that streamline network operations. Collaborating with the Observability team to integrate operational workflows with internal infrastructure and monitoring tools."
+              skills={[
+                "Python",
+                "Networking",
+                "Automation",
+                "Infrastructure",
+                "Observability",
+                "CI/CD",
+              ]}
+              logo="/logos/crusoe.png"
+            />
+            <Separator className="bg-primary/20" />
+
             <ExperienceItem
               title="Full-Stack Software Engineer Intern"
               company="Ari Innovation"
-              period="Mar 2025 - Present"
-              description="Developing backend RESTful endpoints using NestJS for user registration and authentication via SSO or email-based sign-up, enabling up to 300 users to access their personal Web3 health wallet. Storing user information securely in DynamoDB to ensure scalable and reliable data management."
+              period="Mar 2025 - May 2025"
+              description="Developed backend RESTful endpoints using NestJS for user registration and authentication via SSO or email-based sign-up, enabling up to 300 users to access their personal Web3 health wallet. Stored user data securely in DynamoDB, deployed a local testing environment using Docker and LocalStack for scalable and efficient API development."
               skills={[
                 "NestJS",
                 "Node.js",
@@ -572,9 +625,10 @@ export default function Portfolio() {
                 "Web3",
                 "Docker",
               ]}
+              logo="/logos/ari.png"
             />
 
-            <Separator />
+            <Separator className="bg-primary/20" />
 
             <ExperienceItem
               title="Frontend Software Engineer Intern"
@@ -589,6 +643,7 @@ export default function Portfolio() {
                 "UI/UX Design",
                 "Docker",
               ]}
+              logo="/logos/raise.png"
             />
           </div>
         </div>
@@ -606,11 +661,11 @@ export default function Portfolio() {
           >
             <h2 className="text-3xl font-bold mb-4 inline-flex items-center gap-2 justify-center">
               <Code className="h-6 w-6 text-primary" />
-              Featured Projects
+              Star Projects
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Here are some of my recent projects that showcase my skills and
-              approach to solving real-world problems.
+              Explore my constellation of projects that showcase my skills and
+              approach to solving real-world challenges.
             </p>
           </motion.div>
 
@@ -657,8 +712,11 @@ export default function Portfolio() {
 
           <div className="mt-12 text-center">
             <a href="https://github.com/ashwinsm10" target="_blank">
-              <Button variant="outline" className="gap-2 cursor-pointer">
-                View All Projects <ExternalLink className="h-4 w-4" />
+              <Button
+                variant="outline"
+                className="gap-2 cursor-pointer border-primary/30 hover:border-primary text-primary"
+              >
+                Explore All Projects <Rocket className="h-4 w-4" />
               </Button>
             </a>
           </div>
@@ -674,16 +732,16 @@ export default function Portfolio() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="md:w-1/2"
+              className="md:w-1/2 backdrop-blur-sm p-6 rounded-lg bg-card/20 border border-primary/10"
             >
               <h2 className="text-3xl font-bold mb-4 inline-flex items-center gap-2">
                 <Mail className="h-6 w-6 text-primary" />
-                Get In Touch
+                Send a Signal
               </h2>
               <p className="text-muted-foreground mb-6">
-                Interested in working together? Feel free to reach out for
+                Ready to connect across the digital cosmos? Reach out for
                 collaborations, internship opportunities, or just a friendly
-                chat about tech.
+                chat about tech and the universe.
               </p>
 
               <div className="space-y-4">
@@ -691,7 +749,7 @@ export default function Portfolio() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="rounded-full shrink-0"
+                    className="rounded-full shrink-0 border-primary/30 text-primary"
                   >
                     <Mail className="h-4 w-4" />
                   </Button>
@@ -707,7 +765,7 @@ export default function Portfolio() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="rounded-full shrink-0"
+                    className="rounded-full shrink-0 border-primary/30 text-primary"
                   >
                     <Linkedin className="h-4 w-4" />
                   </Button>
@@ -723,7 +781,7 @@ export default function Portfolio() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="rounded-full shrink-0"
+                    className="rounded-full shrink-0 border-primary/30 text-primary"
                   >
                     <Github className="h-4 w-4" />
                   </Button>
@@ -739,7 +797,7 @@ export default function Portfolio() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="rounded-full shrink-0"
+                    className="rounded-full shrink-0 border-primary/30 text-primary"
                   >
                     <PenTool className="h-4 w-4" />
                   </Button>
