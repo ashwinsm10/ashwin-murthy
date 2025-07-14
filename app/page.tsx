@@ -595,7 +595,7 @@ export default function Portfolio() {
 
           <div className="space-y-12 backdrop-blur-sm p-6 rounded-lg bg-card/20 border border-primary/10">
             <ExperienceItem
-              title="Software Engineer Intern – Network Engineering"
+              title="Networking Engineer Intern"
               company="Crusoe"
               period="Jun 2025 - Aug 2025"
               description="Contributing to automation tooling for AI-focused production networks, building Python-based systems that streamline network operations. Collaborating with the Observability team to integrate operational workflows with internal infrastructure and monitoring tools."
