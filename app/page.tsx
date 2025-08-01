@@ -528,7 +528,7 @@ export default function Portfolio() {
                       B.S. Computer Science
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      UC Santa Cruz, 2023-2026
+                      UC Santa Cruz, 2023-2027
                     </p>
                   </CardContent>
                 </Card>
