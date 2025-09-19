@@ -131,7 +131,7 @@ const ContactForm = () => {
                 ></textarea>
               </div>
               <Button
-                className="w-full"
+                className="w-full cursor-pointer"
                 type="submit"
                 disabled={!message.trim() || (!!email && !isValidEmail(email))}
               >
