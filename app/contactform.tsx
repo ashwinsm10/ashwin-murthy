@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Notification } from "@/components/notification";
+import ElectricBorder from "@/components/ElectricBorder";
 
 const ContactForm = () => {
   const [name, setName] = useState("");
@@ -68,13 +68,10 @@ const ContactForm = () => {
         onClose={() => setNotificationOpen(false)}
       />
 
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
+      <div
         className="md:w-1/2"
       >
+        <ElectricBorder>
         <Card>
           <CardContent className="p-6">
             <h3 className="text-xl font-semibold mb-4">Shoot me a message!</h3>
@@ -90,7 +87,7 @@ const ContactForm = () => {
                   type="text"
                   id="name"
                   className="w-full px-3 py-2 border border-border rounded-md bg-background"
-                  placeholder="Your name"
+                  placeholder="John Doe"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -106,7 +103,7 @@ const ContactForm = () => {
                   type="email"
                   id="email"
                   className="w-full px-3 py-2 border border-border rounded-md bg-background"
-                  placeholder="your@email.com"
+                  placeholder="john@doe.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onBlur={() => setIsEmailTouched(true)}
@@ -128,7 +125,7 @@ const ContactForm = () => {
                   id="message"
                   rows={5}
                   className="w-full px-3 py-2 border border-border rounded-md bg-background resize-none"
-                  placeholder="How can I help you?"
+                  placeholder="I'm here to help 😎"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                 ></textarea>
@@ -143,7 +140,8 @@ const ContactForm = () => {
             </form>
           </CardContent>
         </Card>
-      </motion.div>
+        </ElectricBorder>
+      </div>
     </>
   );
 };

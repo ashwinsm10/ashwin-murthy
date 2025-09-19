@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { motion } from "framer-motion";
 import {
   Github,
   Linkedin,
@@ -14,20 +13,21 @@ import {
   Rocket,
   Star,
   Sun,
-  Satellite,
   Eclipse,
   Eye,
   EyeOff,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
+import ScrollStack, { ScrollStackItem } from "@/components/ScrollStack";
 import Link from "next/link";
 import { Inter, Poppins } from "next/font/google";
 import Image from "next/image";
 import { VideoWithSlider } from "./video_player";
 import { ParallaxBackground } from "./background";
 import ContactForm from "./contactform";
+import ShinyText from "@/components/ShinyText";
+import DecryptedText from "@/components/DecryptedText";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -64,8 +64,7 @@ const ProjectCard = ({
   link,
 }: ProjectCardProps) => {
   return (
-    <motion.div
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+    <div
       className="group relative bg-card/70 backdrop-blur-sm rounded-lg overflow-hidden border border-primary/20 shadow-sm hover:shadow-md hover:shadow-primary/20 transition-all duration-300"
     >
       <div className="relative aspect-video w-full overflow-hidden">
@@ -87,7 +86,7 @@ const ProjectCard = ({
           <Link href={link} target="_blank" rel="noopener noreferrer">
             <Button
               size="sm"
-              className="cursor-pointer bg-gradient-to-r from-primary to-primary/80 text-white border-none"
+              className="cursor-pointer bg-gradient-to-r from-black to-black/80 text-white border-none"
             >
               Launch Project <Rocket className="ml-2 h-4 w-4" />
             </Button>
@@ -106,7 +105,7 @@ const ProjectCard = ({
           ))}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 const ExperienceItem = ({
@@ -118,46 +117,46 @@ const ExperienceItem = ({
   logo,
 }: ExperienceItemProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      className="flex flex-col md:flex-row gap-6 md:gap-10"
-    >
-      {/* LEFT SIDE: Company Info */}
-      <div className="md:w-1/3 space-y-1">
-        <div className="flex items-center gap-2">
-          {logo && (
-            <img
-              src={logo}
-              alt={`${company} logo`}
-              className="w-6 h-6 object-contain rounded-md"
-            />
-          )}
-          <span className="text-sm font-semibold text-primary">{company}</span>
-        </div>
-        <p className="text-base font-medium text-foreground">{title}</p>
-        <p className="text-sm text-muted-foreground">{period}</p>
-      </div>
+    <ScrollStackItem>
+      <div className="bg-card p-6 rounded-lg border border-border hover:border-primary/30 transition-colors duration-300">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-10">
+          {/* LEFT SIDE: Company Info */}
+          <div className="md:w-1/3 space-y-1">
+            <div className="flex items-center gap-2">
+              {logo && (
+                <Image
+                  src={logo}
+                  alt={`${company} logo`}
+                  width={24}
+                  height={24}
+                  className="w-6 h-6 object-contain rounded-md"
+                />
+              )}
+              <span className="text-sm font-semibold text-primary">{company}</span>
+            </div>
+            <p className="text-base font-medium text-foreground">{title}</p>
+            <p className="text-sm text-muted-foreground">{period}</p>
+          </div>
 
-      {/* RIGHT SIDE: Description & Skills */}
-      <div className="md:w-2/3 space-y-3">
-        <p className="text-sm leading-relaxed text-muted-foreground">
-          {description}
-        </p>
-        <div className="flex flex-wrap gap-2 pt-1">
-          {skills.map((skill, index) => (
-            <span
-              key={index}
-              className="text-xs font-medium py-1 px-2 rounded-full bg-muted text-muted-foreground border border-border"
-            >
-              {skill}
-            </span>
-          ))}
+          {/* RIGHT SIDE: Description & Skills */}
+          <div className="md:w-2/3 space-y-3">
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              {description}
+            </p>
+            <div className="flex flex-wrap gap-2 pt-1">
+              {skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className="text-xs font-medium py-1 px-2 rounded-full bg-muted text-muted-foreground border border-border"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </motion.div>
+    </ScrollStackItem>
   );
 };
 
@@ -221,66 +220,59 @@ export default function Portfolio() {
 
       {/* Navigation */}
       <nav
-        className={`fixed top-0 w-full z-20 border-border transition-all duration-300 ${
-          hasScrolled ? "backdrop-blur-md bg-background/30 shadow-sm" : ""
-        }`}
+        className={`fixed top-0 w-full z-20 border-border transition-all duration-300 ${hasScrolled ? "backdrop-blur-md bg-background/30 shadow-sm" : ""
+          }`}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="font-bold text-xl tracking-tight font-heading flex items-center">
-            <Satellite className="mr-2 h-5 w-5 text-primary" />
-            Ashwin Murthy
+            <ShinyText text="Ashwin Murthy" />
           </div>
           <div className="hidden md:flex items-center space-x-6">
             <button
               onClick={() =>
                 scrollToSection({ current: document.getElementById("home") })
               }
-              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
-                currentNavItem === "home"
-                  ? "bg-primary text-primary-foreground shadow-md"
-                  : "text-foreground hover:text-primary hover:bg-primary/10"
-              }`}
+              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${currentNavItem === "home"
+                ? "bg-primary text-primary-foreground shadow-md"
+                : "text-foreground hover:text-primary hover:bg-primary/10"
+                }`}
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection(aboutRef)}
-              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
-                currentNavItem === "about"
-                  ? "bg-primary text-primary-foreground shadow-md"
-                  : "text-foreground hover:text-primary hover:bg-primary/10"
-              }`}
+              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${currentNavItem === "about"
+                ? "bg-primary text-primary-foreground shadow-md"
+                : "text-foreground hover:text-primary hover:bg-primary/10"
+                }`}
             >
               About
             </button>
             <button
               onClick={() => scrollToSection(experienceRef)}
-              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
-                currentNavItem === "experience"
-                  ? "bg-primary text-primary-foreground shadow-md"
-                  : "text-foreground hover:text-primary hover:bg-primary/10"
-              }`}
+              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${currentNavItem === "experience"
+                ? "bg-primary text-primary-foreground shadow-md"
+                : "text-foreground hover:text-primary hover:bg-primary/10"
+                }`}
             >
               Experience
             </button>
             <button
               onClick={() => scrollToSection(projectsRef)}
-              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
-                currentNavItem === "projects"
-                  ? "bg-primary text-primary-foreground shadow-md"
-                  : "text-foreground hover:text-primary hover:bg-primary/10"
-              }`}
+              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${currentNavItem === "projects"
+                ? "bg-primary text-primary-foreground shadow-md"
+                : "text-foreground hover:text-primary hover:bg-primary/10"
+                }`}
             >
               Projects
             </button>
 
             <button
               onClick={() => scrollToSection(contactRef)}
-              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${
-                currentNavItem === "contact"
-                  ? "bg-primary text-primary-foreground shadow-md"
-                  : "text-foreground hover:text-primary hover:bg-primary/10"
-              }`}
+              className={`cursor-pointer px-3 py-1.5 text-sm rounded-full transition-colors font-medium ${currentNavItem === "contact"
+                ? "bg-primary text-primary-foreground shadow-md"
+                : "text-foreground hover:text-primary hover:bg-primary/10"
+                }`}
             >
               Contact
             </button>
@@ -328,11 +320,7 @@ export default function Portfolio() {
         id="home"
         className="relative min-h-screen w-full flex flex-col justify-center items-center text-center px-4"
       >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="space-y-6 max-w-3xl p-6 rounded-lg"
+        <div className="space-y-6 max-w-3xl p-6 rounded-lg"
         >
           <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/40 mx-auto glow-effect">
             <Image
@@ -344,13 +332,14 @@ export default function Portfolio() {
             />
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-            Hi, I&apos;m{" "}
-            <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              Ashwin Murthy
-            </span>
+            <DecryptedText
+              text="Hi, I'm Ashwin Murthy!"
+              animateOn="view"
+              revealDirection="center"
+            />
           </h1>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            Full Stack Developer & CS Explorer
+            Full Stack Developer
           </p>
           <p className="text-muted-foreground max-w-xl mx-auto">
             I build modern web and mobile applications with a focus on
@@ -380,6 +369,7 @@ export default function Portfolio() {
               Contact Me
               <Mail className="h-4 w-4" />
             </Button>
+
             <a
               href="/Ashwin_Murthy_Resume.pdf"
               target="_blank"
@@ -438,7 +428,7 @@ export default function Portfolio() {
               </a>
             </Button>
           </div>
-        </motion.div>
+        </div>
 
         <div
           onClick={() => scrollToSection(aboutRef)}
@@ -452,13 +442,7 @@ export default function Portfolio() {
       <section ref={aboutRef} className="relative py-24 w-full px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="md:w-1/2 backdrop-blur-sm p-6 rounded-lg bg-card/20 border border-primary/10"
-            >
+            <div className="md:w-1/2 backdrop-blur-sm p-6 rounded-lg bg-card/20 border border-primary/10">
               <h2 className="text-3xl font-bold mb-6 inline-flex items-center gap-2">
                 <User className="h-6 w-6 text-primary" />
                 About My Journey
@@ -466,16 +450,13 @@ export default function Portfolio() {
               <p className="text-muted-foreground mb-4">
                 I&apos;m a passionate Computer Science student at UC Santa Cruz
                 with a strong focus on creating intuitive, efficient, and
-                scalable web applications. Like a well-planned space mission, I
-                approach development with precision and thoughtful exploration.
+                scalable web applications. 
               </p>
               <p className="text-muted-foreground mb-6">
                 My approach combines technical expertise with creative
                 problem-solving to build applications that navigate the digital
-                universe with elegance and efficiency. I&apos;m particularly
-                interested in AI integrations, database optimization, and
-                creating cosmic user interfaces that elevate the user experience
-                to new heights.
+                universe with elegance and efficiency. My main focus is to make
+                people's lives easier.
               </p>
               <div className="flex flex-wrap gap-2">
                 <span className="text-sm py-1 px-3 rounded-full bg-primary/10 text-primary">
@@ -509,15 +490,9 @@ export default function Portfolio() {
                   GraphQL
                 </span>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="md:w-1/2"
-            >
+            <div className="md:w-1/2">
               <div className="grid grid-cols-2 gap-4">
                 <Card className="bg-card/30 backdrop-blur-sm border-primary/10">
                   <CardContent className="p-6">
@@ -553,7 +528,7 @@ export default function Portfolio() {
                       Full Stack Development
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      Multiple Internships
+                      3 Internships
                     </p>
                   </CardContent>
                 </Card>
@@ -569,82 +544,81 @@ export default function Portfolio() {
                   </CardContent>
                 </Card>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
       {/* Experience Section */}
       <section ref={experienceRef} className="relative py-24 w-full px-4">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="mb-12 text-center"
-          >
+          <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold mb-4 inline-flex items-center gap-2 justify-center">
               <Briefcase className="h-6 w-6 text-primary" />
-              Orbit of Experience
+              Past Experience
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              A journey through my professional trajectory and the companies
-              I&apos;ve had the opportunity to contribute to.
+              The companies I&apos;ve had the opportunity to contribute to!
             </p>
-          </motion.div>
+          </div>
 
-          <div className="space-y-12 backdrop-blur-sm p-6 rounded-lg bg-card/20 border border-primary/10">
-            <ExperienceItem
-              title="Networking Engineer Intern"
-              company="Crusoe"
-              period="Jun 2025 - Aug 2025"
-              description="Contributing to automation tooling for AI-focused production networks, building Python-based systems that streamline network operations. Collaborating with the Observability team to integrate operational workflows with internal infrastructure and monitoring tools."
-              skills={[
-                "Python",
-                "Networking",
-                "Automation",
-                "Infrastructure",
-                "Observability",
-                "CI/CD",
-              ]}
-              logo="/logos/crusoe.png"
-            />
-            <Separator className="bg-primary/20" />
+          {/* Fixed container with explicit height */}
+          <div className="h-[50vh]"> {/* Set explicit height */}
+            <p className="text-center text-muted-foreground text-xs">psst: scroll down</p>
+            <ScrollStack
+              useWindowScroll={false}
+            >
+              <ExperienceItem
+                title="Software Engineer Intern - Network"
+                company="Crusoe Energy"
+                period="Jun 2025 - Aug 2025"
+                description="Built an automated sync pipeline using Temporal and NetBox webhooks linking NetBox with NetSpyGlass and Kentik, eliminating 4+ hours of manual device integration per deployment. Designed a fault-tolerant, event-driven system to ensure 100% reliable device modifications across APIs. Built real-time Slack alerting for workflow failures, reducing downtime. Deployed containerized microservices with Docker and Kubernetes, and implemented CI/CD with Argo CD to accelerate production rollouts."
+                skills={[
+                  "Temporal",
+                  "Docker",
+                  "Kubernetes",
+                  "Argo CD",
+                  "Go",
+                  "Python",
+                  "JavaScript",
+                  "NetBox",
+                  "NetSpyGlass",
+                  "Kentik"
+                ]}
+                logo="/logos/crusoe.png"
+              />
 
-            <ExperienceItem
-              title="Full-Stack Software Engineer Intern"
-              company="Ari Innovation"
-              period="Mar 2025 - May 2025"
-              description="Developed backend RESTful endpoints using NestJS for user registration and authentication via SSO or email-based sign-up, enabling up to 300 users to access their personal Web3 health wallet. Stored user data securely in DynamoDB, deployed a local testing environment using Docker and LocalStack for scalable and efficient API development."
-              skills={[
-                "NestJS",
-                "Node.js",
-                "DynamoDB",
-                "RESTful APIs",
-                "Authentication",
-                "Web3",
-                "Docker",
-              ]}
-              logo="/logos/ari.png"
-            />
+              <ExperienceItem
+                title="Software Engineer Intern"
+                company="Ari Innovation"
+                period="Mar 2025 - May 2025"
+                description="Developed a full-stack web application using Next.js, TypeScript, and Tailwind CSS, enhancing user engagement by 30%. Implemented responsive UI components and optimized frontend performance, reducing load times by 25%. Collaborated with cross-functional teams to integrate RESTful APIs and implement secure user authentication using NextAuth.js."
+                skills={[
+                  "Next.js",
+                  "TypeScript",
+                  "Tailwind CSS",
+                  "Node.js",
+                  "NextAuth.js",
+                  "PostgreSQL",
+                  "Prisma",
+                ]}
+                logo="/logos/ari.png"
+              />
 
-            <Separator className="bg-primary/20" />
-
-            <ExperienceItem
-              title="Frontend Software Engineer Intern"
-              company="Raise Commercial Real Estate"
-              period="Jul 2024 - Aug 2024"
-              description="Redesigned brokers' deals pages using React.js and TypeScript, streamlining workflows and enhancing usability. Reduced page load times by 90% by implementing React lazy loading and optimizing GraphQL queries. Developed a comprehensive Jest test suite for user permissions, achieving a 12% increase in statement coverage."
-              skills={[
-                "React.js",
-                "TypeScript",
-                "GraphQL",
-                "Jest",
-                "UI/UX Design",
-                "Docker",
-              ]}
-              logo="/logos/raise.png"
-            />
+              <ExperienceItem
+                title="Frontend Software Engineer Intern"
+                company="Raise Commercial Real Estate"
+                period="Jul 2024 - Aug 2024"
+                description="Contributed to the development of a commercial real estate platform using React and TypeScript. Implemented responsive UI components and integrated with Mapbox GL for property visualization. Worked closely with the design team to ensure a seamless user experience across devices."
+                skills={[
+                  "React",
+                  "TypeScript",
+                  "Mapbox GL",
+                  "Styled Components",
+                  "RESTful APIs",
+                ]}
+                logo="/logos/raise.png"
+              />
+            </ScrollStack>
           </div>
         </div>
       </section>
@@ -652,13 +626,7 @@ export default function Portfolio() {
       {/* Projects Section */}
       <section ref={projectsRef} className="relative py-24 w-full px-4">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="mb-12 text-center"
-          >
+          <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold mb-4 inline-flex items-center gap-2 justify-center">
               <Code className="h-6 w-6 text-primary" />
               Star Projects
@@ -667,7 +635,7 @@ export default function Portfolio() {
               Explore my constellation of projects that showcase my skills and
               approach to solving real-world challenges.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <ProjectCard
@@ -727,21 +695,15 @@ export default function Portfolio() {
       <section ref={contactRef} className="relative py-24 w-full px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="md:w-1/2 backdrop-blur-sm p-6 rounded-lg bg-card/20 border border-primary/10"
-            >
+            <div className="md:w-1/2 backdrop-blur-sm p-6 rounded-lg bg-card/20 border border-primary/10">
               <h2 className="text-3xl font-bold mb-4 inline-flex items-center gap-2">
                 <Mail className="h-6 w-6 text-primary" />
-                Send a Signal
+                Send a Message
               </h2>
               <p className="text-muted-foreground mb-6">
-                Ready to connect across the digital cosmos? Reach out for
+                Ready to connect? Reach out for
                 collaborations, internship opportunities, or just a friendly
-                chat about tech and the universe.
+                chat about tech, basketball, or anything else!
               </p>
 
               <div className="space-y-4">
@@ -807,7 +769,7 @@ export default function Portfolio() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
             <ContactForm />
           </div>
         </div>
@@ -817,7 +779,7 @@ export default function Portfolio() {
       <footer className="bg-background border-t border-border py-8">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
           <div className="text-center md:text-left mb-4 md:mb-0">
-            <h3 className="font-bold text-lg">Ashwin Murthy</h3>
+            <ShinyText text="Ashwin Murthy" />
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} All rights reserved.
             </p>
