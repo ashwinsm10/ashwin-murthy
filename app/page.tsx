@@ -28,6 +28,7 @@ import { ParallaxBackground } from "./background";
 import ContactForm from "./contactform";
 import ShinyText from "@/components/ShinyText";
 import DecryptedText from "@/components/DecryptedText";
+import SpotlightCard from "@/components/SpotlightCard";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -64,7 +65,7 @@ const ProjectCard = ({
   link,
 }: ProjectCardProps) => {
   return (
-    <div
+    <SpotlightCard
       className="group relative bg-card/70 backdrop-blur-sm rounded-lg overflow-hidden border border-primary/20 shadow-sm hover:shadow-md hover:shadow-primary/20 transition-all duration-300"
     >
       <div className="relative aspect-video w-full overflow-hidden">
@@ -105,7 +106,7 @@ const ProjectCard = ({
           ))}
         </div>
       </div>
-    </div>
+    </SpotlightCard>
   );
 };
 const ExperienceItem = ({
